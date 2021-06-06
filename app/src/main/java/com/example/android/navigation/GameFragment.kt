@@ -23,6 +23,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
@@ -96,10 +98,22 @@ class GameFragment : Fragment() {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        // We've won!  Navigate to the gameWonFragment.
+                        // We've won! Navigate to the gameWonFragment.
+
+                        // This doesn't work because doesn't use the view: View parameter
+                        //Navigation.createNavigateOnClickListener(R.id.action_gameFragment_to_gameWonFragment)
+
+                        // This works because it uses the view: View parameter
+                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
+
+                    // This doesn't work because doesn't use the view: View parameter
+                    //Navigation.createNavigateOnClickListener(R.id.action_gameFragment_to_gameOverFragment)
+
+                    // This works because it uses the view: View parameter
+                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
                 }
             }
         }
