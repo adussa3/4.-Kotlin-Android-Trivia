@@ -19,6 +19,9 @@ package com.example.android.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,5 +29,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        // Step 1: Find the navController from myNavHostFragment
+        // Since we're using KTX, you can call "this.findNavController"
+        val navController = this.findNavController(R.id.myNavHostFragment)
+
+        // Step 2: Link the navController to the ActionBar
+        // By calling NavigationUI.setupActionBarWithNavController
+        NavigationUI.setupActionBarWithNavController(this, navController)
+    }
+
+    // Step 3: Find the navController and then call navController.navigateUp
+    // This method handles the action to take when the up button (the left arrow in the actionbar) is pressed
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        return navController.navigateUp()
     }
 }
