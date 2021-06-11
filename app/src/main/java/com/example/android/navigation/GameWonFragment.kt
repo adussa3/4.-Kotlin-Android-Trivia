@@ -20,9 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 
 
@@ -34,9 +36,16 @@ class GameWonFragment : Fragment() {
                 inflater, R.layout.fragment_game_won, container, false)
 
         // From the gameWonFragment, go to the gameFragment
-        binding.nextMatchButton.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_gameWonFragment_to_gameFragment)
-        )
+        binding.nextMatchButton.setOnClickListener { view: View ->
+            view.findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
+        }
+
+        // Get the arguments passed in from gameFragment
+        // Get the number of questions and the number of questions answered correctly
+        val args = arguments?.let { GameWonFragmentArgs.fromBundle(it) }
+
+        // Make a toast to check that the arguments were passed in successfully
+        Toast.makeText(context, "Num Questions: ${args?.numQuestions} Num Correct: ${args?.numCorrect}", Toast.LENGTH_LONG).show()
 
         return binding.root
     }

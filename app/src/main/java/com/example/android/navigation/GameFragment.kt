@@ -104,7 +104,11 @@ class GameFragment : Fragment() {
                         //Navigation.createNavigateOnClickListener(R.id.action_gameFragment_to_gameWonFragment)
 
                         // This works because it uses the view: View parameter
-                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
+                        //view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
+
+                        // This passes the arguments to the next fragment
+                        // The gameFragment passes the number of questions and the number of questions answered correctly to the gameWonFragment
+                        view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions, questionIndex))
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
@@ -113,7 +117,10 @@ class GameFragment : Fragment() {
                     //Navigation.createNavigateOnClickListener(R.id.action_gameFragment_to_gameOverFragment)
 
                     // This works because it uses the view: View parameter
-                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
+                    //view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
+
+                    // This passes the arguments to the next fragment
+                    view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment())
                 }
             }
         }

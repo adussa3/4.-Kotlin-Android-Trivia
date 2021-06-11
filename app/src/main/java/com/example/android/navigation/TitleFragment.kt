@@ -42,11 +42,16 @@ class TitleFragment : Fragment() {
 
         // Simpler way to change fragments
         // This does NOT require a view: View parameter
-        binding.playButton.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
-        )
+        //binding.playButton.setOnClickListener(
+        //        Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
+        //)
 
-        // This tells Android hat our fragment has an Options menu, so it will call onCreateOptionsMenu()
+        // Here's the "Navigation Directions" version if you want to use safe arguments to pass data between fragments
+        binding.playButton.setOnClickListener {view: View ->
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        }
+
+        // This tells Android that our fragment has an Options menu, so it will call onCreateOptionsMenu()
         setHasOptionsMenu(true)
 
         // return the created view
