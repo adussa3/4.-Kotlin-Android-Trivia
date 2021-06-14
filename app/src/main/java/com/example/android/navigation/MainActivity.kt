@@ -20,6 +20,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -45,6 +47,17 @@ class MainActivity : AppCompatActivity() {
         // By calling NavigationUI.setupActionBarWithNavController
         // Add the drawerLayout menu as the 3rd parameter
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+
+        // In the anonymous function lock/unlock the drawer layout if the id matches the start destination (TitleFragment)
+        // We only want to let the drawer layout side menu to slide out when the user is on the TitleFragment
+        // Otherwise, lock the drawer layout so it doesn't slide
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id == nc.graph.startDestination) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
 
         // Setup the NavigationUI to know about the navigation view
         NavigationUI.setupWithNavController(binding.navView, navController)
