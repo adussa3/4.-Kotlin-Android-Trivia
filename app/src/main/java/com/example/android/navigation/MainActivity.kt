@@ -19,16 +19,23 @@ package com.example.android.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    // Create the drawerLayout variable
+    private lateinit var drawerLayout: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        // Initialize the drawerLayout
+        drawerLayout = binding.drawerLayout
 
         // Step 1: Find the navController from myNavHostFragment
         // Since we're using KTX, you can call "this.findNavController"
@@ -36,13 +43,21 @@ class MainActivity : AppCompatActivity() {
 
         // Step 2: Link the navController to the ActionBar
         // By calling NavigationUI.setupActionBarWithNavController
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        // Add the drawerLayout menu as the 3rd parameter
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+
+        // Setup the NavigationUI to know about the navigation view
+        NavigationUI.setupWithNavController(binding.navView, navController)
     }
 
     // Step 3: Find the navController and then call navController.navigateUp
     // This method handles the action to take when the up button (the left arrow in the actionbar) is pressed
+    // IGNORE the comment above! We're replacing the up button
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
-        return navController.navigateUp()
+        //return navController.navigateUp()
+
+        // This replaces the up button with the navigation drawer button in the navigation UI
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
 }
