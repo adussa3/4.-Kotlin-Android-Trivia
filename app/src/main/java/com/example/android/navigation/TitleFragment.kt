@@ -59,15 +59,14 @@ class TitleFragment : Fragment() {
     }
 
     // Override onCreateOptionsMenu()
-    // Use the passed-in MenuInflater to inflate he overflow_menu
+    // Use the passed-in MenuInflater to inflate the overflow_menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.overflow_menu, menu)
     }
 
     // Override onOptionsItemSelected()
-    // Return true if NavigationUI.onNavDestinationSelected() returns true,
-    // else return super.onOptionsItemSelected()
+    // Return true if either NavigationUI.onNavDestinationSelected() or super.onOptionsItemSelected(item) is true
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item!!, view!!.findNavController()) || super.onOptionsItemSelected(item)
     }
